@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+//////////////////////
+// ENUMS
+//////////////////////
+
+enum Role {
+  ADMIN
+  CLIENT
+  OPERATIVE
+}
+
+enum ServiceStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum OrderStatus {
+  PENDING
+  ACCEPTED
+  IN_PROGRESS
+  DONE
+  CANCELLED
+}
+
+//////////////////////
+// MODELS
+//////////////////////
+
+model User {
+  id            Int      @id @default(autoincrement())
+  name          String
+  email         String   @unique
+  password String
+  role          Role
+  created_at    DateTime @default(now())
+
+  // relations
+  services         Service[] @relation("OperativeServices")
+
+  clientOrders     Order[]   @relation("ClientOrders")
+  operativeOrders  Order[]   @relation("OperativeOrders")
+}
+
+//////////////////////
+
+model Category {
+  id         Int      @id @default(autoincrement())
+  name       String
+
+  created_at DateTime @default(now())
+
+  services   Service[]
+}
+
+//////////////////////
+
+model Service {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String
+  price       Float
+  status      ServiceStatus
+
+  created_at  DateTime      @default(now())
+
+  operative_id Int
+  operative    User @relation("OperativeServices", fields: [operative_id], references: [id])
+
+  category_id  Int
+  category     Category @relation(fields: [category_id], references: [id])
+
+  orders       Order[]
+}
+
+//////////////////////
+
+model Order {
+  id              Int          @id @default(autoincrement())
+  price_at_order  Float
+  status          OrderStatus  @default(PENDING)
+  address         String
+  note            String?
+  created_at      DateTime     @default(now())
+
+  client_id   Int
+  client      User @relation("ClientOrders", fields: [client_id], references: [id])
+
+  service_id  Int
+  service     Service @relation(fields: [service_id], references: [id])
+
+  operative_id Int
+  operative    User @relation("OperativeOrders", fields: [operative_id], references: [id])
+}

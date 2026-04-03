@@ -1,0 +1,135 @@
+{
+  "info": {
+    "name": "Hadshi API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "hadshi-api-collection"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "health"]
+        }
+      }
+    },
+    {
+      "name": "Auth - register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Client Demo\",\n  \"email\": \"client@example.com\",\n  \"password\": \"secret\",\n  \"role\": \"CLIENT\"\n}"
+        },
+        "url": "http://localhost:5000/api/auth/register"
+      }
+    },
+    {
+      "name": "Auth - login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"client@example.com\",\n  \"password\": \"secret\"\n}"
+        },
+        "url": "http://localhost:5000/api/auth/login"
+      }
+    },
+    {
+      "name": "Auth - me",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "http://localhost:5000/api/auth/me"
+      }
+    },
+    {
+      "name": "Users - list",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:5000/api/users"
+      }
+    },
+    {
+      "name": "Users - create",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Client Demo\",\n  \"email\": \"client@example.com\",\n  \"password\": \"secret\",\n  \"role\": \"CLIENT\"\n}"
+        },
+        "url": "http://localhost:5000/api/users"
+      }
+    },
+    {
+      "name": "Categories - list",
+      "request": { "method": "GET", "url": "http://localhost:5000/api/categories" }
+    },
+    {
+      "name": "Categories - create",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"name\": \"Home Services\" }" },
+        "url": "http://localhost:5000/api/categories"
+      }
+    },
+    {
+      "name": "Services - list",
+      "request": { "method": "GET", "url": "http://localhost:5000/api/services" }
+    },
+    {
+      "name": "Services - create",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"AC Repair\",\n  \"description\": \"Maintain and tune\",\n  \"price\": 350,\n  \"status\": \"ACTIVE\",\n  \"category_id\": 1,\n  \"operative_id\": 2\n}"
+        },
+        "url": "http://localhost:5000/api/services"
+      }
+    },
+    {
+      "name": "Orders - list",
+      "request": { "method": "GET", "url": "http://localhost:5000/api/orders" }
+    },
+    {
+      "name": "Orders - create",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"service_id\": 1,\n  \"address\": \"Rabat\",\n  \"note\": \"If possible this week\"\n}"
+        },
+        "url": "http://localhost:5000/api/orders"
+      }
+    },
+    {
+      "name": "Orders - accept",
+      "request": { "method": "POST", "url": "http://localhost:5000/api/orders/1/accept" }
+    },
+    {
+      "name": "Orders - in-progress",
+      "request": { "method": "POST", "url": "http://localhost:5000/api/orders/1/in-progress" }
+    },
+    {
+      "name": "Orders - done",
+      "request": { "method": "POST", "url": "http://localhost:5000/api/orders/1/done" }
+    },
+    {
+      "name": "Orders - cancel",
+      "request": { "method": "POST", "url": "http://localhost:5000/api/orders/1/cancel" }
+    }
+  ]
+}
